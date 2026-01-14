@@ -1,0 +1,130 @@
+/* GLOBAL RESETS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ------------------------------------- */
+/* BODY & BACKGROUND SETUP (Default/Game Style) */
+/* ------------------------------------- */
+
+body {
+    /* Core Typography & Color */
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    
+    /* Default Background Image (Make sure 'image/click2.jpg' exists!) */
+    background-image: url('image/click2.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed; /* Keeps image fixed during scroll */
+}
+
+/* OVERLAY for Readability & Style */
+body::before {
+    content: '';
+    position: fixed; /* Ensures the overlay covers the fixed background */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gradient overlay for depth and better text contrast */
+    background: linear-gradient(
+        to bottom, 
+        rgba(0, 0, 0, 0.2) 0%, 
+        rgba(0, 0, 0, 0.5) 70%, 
+        rgba(0, 0, 0, 0.7) 100%
+    ); 
+    z-index: -1;
+    transition: background 1s ease; /* Transition the overlay */
+}
+
+/* JS Class to trigger the final state after load */
+.loaded {
+    opacity: 1;
+    transform: scale(1); /* Zoom animation end state */
+}
+
+/* ------------------------------------- */
+/* CONTENT WRAPPER & DEFAULT STYLING     */
+/* ------------------------------------- */
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; 
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.profile-header h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem); 
+    font-weight: 700;
+    margin-bottom: 5px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px #fff, 0 0 10px #ff69b4, 2px 2px 6px rgba(0, 0, 0, 0.9); 
+}
+
+.profile-header p {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    margin-bottom: 30px;
+    font-style: italic;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.link-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 90%;
+    max-width: 200px;
+    opacity: 0; 
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out 0.5s, transform 0.5s ease-out 0.5s;
+}
+
+.links-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Default Link Button (Game-like/Clean) */
+.link-button {
+    display: block;
+    padding: 18px 20px;
+    background-color: rgba(255, 255, 255, 0.9); 
+    color: #4a004a; /* Deep purple primary color */
+    text-decoration: none;
+    border-radius: 20px; 
+    font-weight: 700;
+    font-size: 1.15rem;
+    box-shadow: 0 6px 0 #b39cd0; /* 3D press effect */
+    border: 3px solid #4a004a; 
+    transition: all 0.2s ease-out;
+    font-family: inherit;
+}
+
+.link-button:hover {
+    background-color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(74, 0, 74, 0.4); 
+    border-color: #8a2be2;
+}
+
+.link-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 3px 0 #b39cd0;
+}
+
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .profile-header h1 { font-size: 2rem; }
+    .link-button { font-size: 1rem; padding: 15px 10px; }
+}

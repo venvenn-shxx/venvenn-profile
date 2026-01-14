@@ -1,0 +1,257 @@
+:root {
+    --main-purple: #d4b0e1;
+    --soft-bg: rgb(85, 15, 98);
+    --ink: #740685;
+    --muted: #6b5b95;
+
+    /* Glass effect colors */
+    --card-bg: rgba(252, 247, 255, 0.75); 
+    --glass-border: rgba(59, 13, 105, 0.4);
+}
+
+* { box-sizing: border-box; }
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Poppins', 'Noto Sans JP', sans-serif;
+    background-image: url(image/bg.jpg);
+    background-size: cover;
+    background-position: center;
+    
+   cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 511.999 511.999' width='16' height='16'><path fill='%23FF728B' d='M196.786 357.748C83.906 553.262-87.718 256 138.042 256c-225.761 0-54.136-297.262 58.744-101.747-112.881-195.515 230.368-195.515 117.487 0C427.154-41.262 598.779 256 373.018 256c225.761 0 54.136 297.262-58.744 101.748 112.88 195.514-230.368 195.514-117.488 0z'/><circle fill='%23FFEB99' cx='255.711' cy='255.997' r='59.308'/></svg>") 6 6, auto !important;
+}
+
+/* Also add this so buttons still show the heart or a pointer */
+a, button, .info-item {
+   cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 511.999 511.999' width='16' height='16'><path fill='%23FF728B' d='M196.786 357.748C83.906 553.262-87.718 256 138.042 256c-225.761 0-54.136-297.262 58.744-101.747-112.881-195.515 230.368-195.515 117.487 0C427.154-41.262 598.779 256 373.018 256c225.761 0 54.136 297.262-58.744 101.748 112.88 195.514-230.368 195.514-117.488 0z'/><circle fill='%23FFEB99' cx='255.711' cy='255.997' r='59.308'/></svg>") 6 6, auto !important;
+}
+
+/* Enhancing the Card Aesthetic */
+.profile-card, .info-item, .spotify-card {
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px; /* Softer corners */
+    box-shadow: 0 8px 32px 0 #52434e; /* Soft shadow instead of hard block */
+    backdrop-filter: blur(12px); /* Blurred glass effect */
+    -webkit-backdrop-filter: blur(12px);
+
+}
+#sakura-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1; 
+    pointer-events: none; 
+}
+
+/* Ensure your main content stays ABOVE the petals */
+.viewport-wrapper {
+    position: relative; 
+    z-index: 10;      
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2vh;
+}
+
+.container {
+    width: 95%;
+    max-width: 1000px; /* Increased width to fulfill the page more */
+    display: flex;
+    flex-direction: column;
+    gap: 3vh; /* Responsive gap */
+    transform: scale(1.05); /* Slight "Zoom out" effect to make content look full */
+
+}
+
+/* Card Styling with Anime Borders */
+
+.profile-card, .info-item, .spotify-card {
+    background: var(--card-bg);
+    border: 2px solid var(--ink);
+    border-radius: 20px;
+    box-shadow: 6px 6px 0px var(--main-purple);
+    backdrop-filter: blur(5px);
+
+}
+
+/* Header Section */
+
+.profile-card {
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-main {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    width: 100%;
+}
+
+.avatar-wrapper {
+    position: relative;
+    border: 3px solid var(--ink);
+    padding: 5px;
+    background: white;
+    flex-shrink: 0;
+    transform: rotate(-1deg);
+}
+
+.avatar { width: 140px; height: 140px; display: block; object-fit: cover; }
+
+.status-badge {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    background: rgb(251, 212, 253);
+    border: 2px solid var(--ink);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    transform: rotate(1deg);
+}
+
+.name { font-family: 'Grandstander', cursive;
+  font-size: 50px;
+  color: rgb(211, 175, 240);
+  margin-bottom: 0%;
+  margin-top: 0.2rem;
+  -webkit-text-stroke: 1.5px #000000;}
+.tagline { color: rgb(109, 58, 151); font-weight: 600; margin: 6px 0; font-size: 1rem; }
+.bio { font-size: 0.95rem; color: var(--muted); margin: 6px 0; border-left: 3px solid var(--main-purple); padding-left: 10px; }
+
+.social-links {
+    margin-top: 25px;
+    display: flex;
+    gap: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #614774;
+    width: 100%;
+    justify-content: center;
+
+}
+
+.social-links img { width: 30px; opacity: 0.6; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.social-links img:hover { opacity: 1; transform: scale(1.3) rotate(5deg); filter: drop-shadow(5px 5px 5px var(--main-purple)); }
+
+
+/* Grid Layout */
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.grid-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: var(--ink);
+    border-bottom: 2px solid var(--soft-bg);
+    display: inline-block;
+}
+
+/* Info Section */
+.info-stack { display: flex; flex-direction: column; gap: 8px; }
+
+.info-item {
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1rem;
+    transition: 0.2s;
+}
+.info-item:icon{
+    width: 2px;
+    height: 2px;
+}
+.info-item:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0px var(--main-purple); }
+
+
+/* Music Section */
+.spotify-card { padding: 30px; display: flex; flex-direction: column; justify-content: space-between; }
+.sp-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #1DB954; 
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.spotify-logo {
+    width: 20px;
+    height: 20px;
+    /* Optional: adds a slight "floating" animation to the logo specifically */
+    animation: logo-pulse 2s ease-in-out infinite;
+}
+
+
+.sp-body { display: flex; gap: 15px; align-items: center; }
+
+.album-art { width: 75px; height: 75px; border-radius: 6px; border: 2px solid var(--ink); }
+
+.jp-sub { font-size: 0.75rem; color: var(--muted); margin: 0; }
+
+.track-title { font-weight: 700; font-size: 1rem; color: #431c61; margin: 2px 0; }
+
+.artist-name { font-weight: 350; font-size: 0.95rem; color: #431c61; margin: 2px 0; }
+
+
+
+.sp-progress { margin-top: 10px; }
+
+.progress-bg { background: #eee; height: 6px; border-radius: 12px; border: 1.5px solid var(--ink); overflow: hidden; }
+
+.progress-fill { background: #9e75bd; height: 100%; width: 0%; transition: width 1s linear; }
+
+.time-labels { display: flex; justify-content: space-between; font-size: 10px; margin-bottom: 5px; color: var(--muted); }
+
+
+.sp-btn {
+    width: 100%;
+    margin-top: 20px;
+    background: white;
+    border: 2px solid var(--ink);
+    color: var(--ink);
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.sp-btn:hover { background: var(--ink); color: white; transform: translateY(-2px); }
+
+
+/* Responsive adjustments for smaller height screens */
+
+@media (max-height: 700px) {
+    .container { transform: scale(0.85); }
+}
+
+@media (max-width: 768px) {
+    body { overflow-y: auto; }
+    .viewport-wrapper { height: auto; padding: 40px 20px; }
+    .content-grid { grid-template-columns: 1fr; }
+    .profile-main { flex-direction: column; text-align: center; }
+    .avatar-wrapper { transform: none; }
+
+}
+@keyframes logo-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); filter: drop-shadow(0 0 5px rgba(29, 185, 84, 0.5)); }
+}

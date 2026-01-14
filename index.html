@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venvenn Profile </title>
+    <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <canvas id="sakura-canvas"></canvas>
+
+    <div class="viewport-wrapper">
+        <div class="container">
+            <header class="profile-card">
+                <div class="profile-main">
+                    <div class="avatar-wrapper">
+                        <img src="image/me3.jpg" alt="Venvenn" class="avatar">
+                        <div class="status-badge" id="discord-status">OFFLINE</div>
+                    </div>
+                    <div class="profile-info">
+                        <h1 class="name">Venvenn</h1>
+                        <p class="tagline">✨I code a little bit✨</p>
+                        <p class="bio">An INFP-T hopeless romantic girl, powered by 99.99% caffeine and lost in her dreams...</p>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/venvenn-shxx" target="_blank" rel="noopener noreferrer"><img src="https://img.icons8.com/?size=100&id=3tC9EQumUAuq&format=png&color=000000" alt="GH"></a>
+                    <a href="https://www.instagram.com/venn.thehypophrenia_/" target="_blank" rel="noopener noreferrer"><img src="https://img.icons8.com/?size=100&id=32309&format=png&color=000000" alt="IG"></a>
+                    <a href="https://steamcommunity.com/profiles/76561199478726225/" target="_blank" rel="noopener noreferrer"><img src="https://img.icons8.com/?size=100&id=pOa8st0SGd5C&format=png&color=000000" alt="FB"></a>
+                    <a href="discord.html"><img src="https://img.icons8.com/?size=100&id=30888&format=png&color=000000" alt="DC"></a>
+                </div>
+            </header>
+
+            <div class="content-grid">
+                <section class="info-section">
+                    <h2 class="grid-title">INFO SECTION </h2>
+                    <div class="info-stack">
+                        <div class="info-item">
+                            <span class="icon"><img src="https://img.icons8.com/?size=100&id=30568&format=png&color=000000" style="width: 35px; height: 35px;"></span>
+                            <div class="text">Ansan-si, Gyeonggi-do, South Korea</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="icon"><img src="https://img.icons8.com/?size=100&id=pdp190Sk7cO8&format=png&color=F25081" style="width: 35px; height: 35px;"></span>
+                            <div class="text">NCC Education at NVL University, Mandalay, Myanmar</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="icon"><img src="https://img.icons8.com/?size=100&id=nDclDUv6L3Wn&format=png&color=000000" style="width: 35px; height: 35px;"></span>
+                            <div class="text">Hanyang Univ. (ERICA), South Korea</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="icon"><img src="https://img.icons8.com/?size=100&id=o4pRVs5aQlmJ&format=png&color=000000" style="width: 35px; height: 35px;"></span>
+                            <div class="text"><strong>B.Sc (Hons) BCIS Bachelor Degree</strong><br>form University of Central Lancashire at UK</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="music-section">
+                    <h2 class="grid-title">ACTIVITY</h2>
+                    <div class="spotify-card" id="music-activity-container">
+                        <div class="sp-status">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" class="spotify-logo">
+                        <span id="listening-status">Chilling...</span>
+                    </div>
+                        <div class="sp-body">
+                            <img id="album-art" src="image/totoro1.gif" alt="Album Art" class="album-art">
+                            <div class="sp-text">
+                                <p id="track-title" class="track-title">May be Sleeping or Busy</p>
+                                <p id="artist-name" class="artist-name">---</p>
+                                <p id="album-name" class="jp-sub">---</p>
+                            </div>
+                        </div>
+                        <div class="sp-progress">
+                            <div class="time-labels">
+                                <span id="elapsed-time">0:00</span>
+                                <span id="total-time">0:00</span>
+                            </div>
+                            <div class="progress-bg"><div id="progress-bar-fill" class="progress-fill"></div></div>
+                        </div>
+                        <a id="spotify-link" href="#" style="display:none"></a>
+                        <button class="sp-btn" onclick="openSpotify()">Listen on Spotify</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
