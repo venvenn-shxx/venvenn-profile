@@ -181,6 +181,7 @@
     </style>
 </head>
 <body>
+    <audio id="click-sound" src="clicksound2.wav" preload="auto"></audio>
     <canvas id="flower-canvas"></canvas>
 
     <div class="container">
@@ -298,6 +299,42 @@
             }, 50);
             setTimeout(() => heart.remove(), 800);
         });
+
+const clickSound = document.getElementById('click-sound');
+
+// Select ALL links on the page
+const allLinks = document.querySelectorAll('a');
+
+allLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        // 1. Check if the link is actually going somewhere (has an href)
+        if (this.href && !this.href.includes('#')) {
+            e.preventDefault(); // Stop navigation
+            const targetUrl = this.href;
+
+            clickSound.currentTime = 0;
+            clickSound.play();
+
+            // 2. Wait for the sound to start, then navigate
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 150); 
+        } else {
+            // If it's just a button/anchor without a URL, just play sound
+            clickSound.currentTime = 0;
+            clickSound.play();
+        }
+    });
+});
+
+// Also play sound for non-link clicks (general background)
+window.addEventListener('click', (e) => {
+    // Only play if we didn't click a link (to avoid double sound)
+    if (!e.target.closest('a')) {
+        clickSound.currentTime = 0;
+        clickSound.play();
+    }
+});
     </script>
 </body>
 </html>

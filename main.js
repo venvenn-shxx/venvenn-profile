@@ -138,7 +138,7 @@ async function fetchStatus() {
         } else {
             // Hide Spotify info if not listening
             if (spotifyBtn) spotifyBtn.style.display = "none";
-            document.getElementById('listening-status').textContent = "not listening right now";
+            document.getElementById('listening-status').textContent = "not listening rn.";
             if (timer) clearInterval(timer);
         }
     } catch (e) {
@@ -161,3 +161,31 @@ function openSpotify() {
 // Start fetching and refresh every 30 seconds
 fetchStatus();
 setInterval(fetchStatus, 15000);
+
+const clickSound = document.getElementById('click-sound');
+
+document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        const targetUrl = this.href;
+        const isNewTab = this.target === '_blank';
+
+        // 1. Play the sound immediately
+        clickSound.currentTime = 0;
+        clickSound.play();
+
+        // 2. If it's a real link, handle the navigation
+        if (targetUrl && !targetUrl.includes('#')) {
+            e.preventDefault(); // Stop the immediate jump
+
+            setTimeout(() => {
+                if (isNewTab) {
+                    // Opens in a new tab/window
+                    window.open(targetUrl, '_blank');
+                } else {
+                    // Opens in the same tab
+                    window.location.href = targetUrl;
+                }
+            }, 150); // Small delay for the sound to play
+        }
+    });
+});

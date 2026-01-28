@@ -174,6 +174,7 @@
     </style>
 </head>
 <body>
+    <audio id="click-sound" src="clicksound2.wav" preload="auto"></audio>
 
     <canvas id="flower-canvas"></canvas>
 
@@ -226,7 +227,6 @@
     </nav>
 
     <script>
-        // ... (Keep your existing script for User ID, Petals, and Lanyard) ...
         const USER_ID = '748262928955998360'; 
         const canvas = document.getElementById('flower-canvas');
         const ctx = canvas.getContext('2d');
@@ -294,9 +294,15 @@
             try {
                 const response = await fetch(`https://api.lanyard.rest/v1/users/${USER_ID}`);
                 const { data } = await response.json();
+                
                 document.getElementById('display-name').textContent = data.discord_user.display_name;
                 document.getElementById('username').textContent = `@${data.discord_user.username}`;
-                document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${USER_ID}/${data.discord_user.avatar}.webp?size=160`;
+                
+                // FIXED: Logic to detect animated avatars (hashes starting with a_)
+                const avatarHash = data.discord_user.avatar;
+                const extension = avatarHash.startsWith('a_') ? 'gif' : 'webp';
+                document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${USER_ID}/${avatarHash}.${extension}?size=160`;
+
                 const statusDot = document.getElementById('status');
                 const colors = { online: 'var(--online)', idle: 'var(--idle)', dnd: 'var(--dnd)', offline: 'var(--offline)' };
                 statusDot.style.backgroundColor = colors[data.discord_status] || colors.offline;
@@ -323,6 +329,42 @@
                 setTimeout(() => heart.remove(), 800);
             });
         }
+
+const clickSound = document.getElementById('click-sound');
+
+// Select ALL links on the page
+const allLinks = document.querySelectorAll('a');
+
+allLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        // 1. Check if the link is actually going somewhere (has an href)
+        if (this.href && !this.href.includes('#')) {
+            e.preventDefault(); // Stop navigation
+            const targetUrl = this.href;
+
+            clickSound.currentTime = 0;
+            clickSound.play();
+
+            // 2. Wait for the sound to start, then navigate
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 150); 
+        } else {
+            // If it's just a button/anchor without a URL, just play sound
+            clickSound.currentTime = 0;
+            clickSound.play();
+        }
+    });
+});
+
+// Also play sound for non-link clicks (general background)
+window.addEventListener('click', (e) => {
+    // Only play if we didn't click a link (to avoid double sound)
+    if (!e.target.closest('a')) {
+        clickSound.currentTime = 0;
+        clickSound.play();
+    }
+});
     </script>
 </body>
 </html>
