@@ -189,3 +189,11 @@ document.querySelectorAll('a').forEach(link => {
         }
     });
 });
+// Keep the global click for everything else
+window.addEventListener('click', (e) => {
+    // Only play if we didn't just click a link (to avoid double sound)
+    if (!e.target.closest('a')) {
+        clickSound.currentTime = 0;
+        clickSound.play();
+    }
+});
