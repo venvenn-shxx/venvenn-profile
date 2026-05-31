@@ -197,3 +197,11 @@ window.addEventListener('click', (e) => {
         clickSound.play();
     }
 });
+(function() {
+            
+            const currentPath = window.location.pathname;
+            if (currentPath.endsWith('.html')) {  
+                const cleanPath = currentPath.replace(/\.html$/, '');
+                window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
+            }
+        })();
