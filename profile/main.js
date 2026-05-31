@@ -1,5 +1,6 @@
 // --- CONFIGURATION ---
-const DISCORD_USER_ID = '748262928955998360'; 
+        const ENCODED_ID = 'NzQ4MjYyOTI4OTU1OTk4MzYw';
+        const DISCORD_USER_ID = atob(ENCODED_ID);
 const API_URL = `https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`;
 
 // --- SVG HEART TRAIL ---

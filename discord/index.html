@@ -425,7 +425,8 @@
     </div>
 
     <script>
-        const DISCORD_ID = '748262928955998360'; 
+        const ENCODED_ID = 'NzQ4MjYyOTI4OTU1OTk4MzYw';
+        const DISCORD_ID = atob(ENCODED_ID);
         const canvas = document.getElementById('flower-canvas');
         const ctx = canvas.getContext('2d');
         let petals = [];
