@@ -18,7 +18,7 @@ body, html {
     height: 100%;
     overflow: hidden;
     font-family: 'Poppins', 'Noto Sans JP', sans-serif;
-    background-image: url(image/bg.jpg);
+    background-image: url(../image/bg.jpg);
     background-size: cover;
     background-position: center;
     

@@ -197,32 +197,3 @@ window.addEventListener('click', (e) => {
         clickSound.play();
     }
 });
-(function() {
-        
-        const currentPath = window.location.pathname;
-        if (currentPath.endsWith('.html')) {
-            const cleanPath = currentPath.replace(/\.html$/, '');
-            window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
-        }
-
-        
-        document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href && href.endsWith('.html')) {
-                    e.preventDefault();
-                    const cleanLink = href.replace(/\.html$/, '');
-                    window.history.pushState(null, '', cleanLink);
-                    
-                    
-                    fetch(href)
-                        .then(res => res.text())
-                        .then(html => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(html, 'text/html');
-                            document.body.innerHTML = doc.body.innerHTML;
-                        });
-                }
-            });
-        });
-    })();
