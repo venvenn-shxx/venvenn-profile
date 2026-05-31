@@ -653,6 +653,25 @@
             const cleanPath = currentPath.replace(/\.html$/, '');
             window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
         }
+        document.querySelectorAll('a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.endsWith('.html')) {
+                link.setAttribute('href', href.replace(/\.html$/, ''));
+                
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetPage = href; 
+                    window.history.pushState(null, '', href.replace(/\.html$/, ''));
+                    fetch(targetPage)
+                        .then(response => response.text())
+                        .then(html => {
+                            document.open();
+                            document.write(html);
+                            document.close();
+                        });
+                });
+            }
+        });
     })();
 
     </script>
