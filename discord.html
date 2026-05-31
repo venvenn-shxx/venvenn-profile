@@ -12,29 +12,30 @@
             --white: #ffffff;
             --accent-green: #f0e0f2;
             --text-dark: #634d5d;
+            --text-sub: #8e708a;
             --online: #aed581;
             --idle: #ffd54f;
             --dnd: #e57373;
             --offline: #cfd8dc;
+            --spotify: #1db954;
         }
 
+        /* Base Global Overrides */
         body {
             background-image: url(image/bg.jpg);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             display: flex;
-            flex-direction: column; /* Stack window and button vertically */
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 40px 20px; /* Vertical padding so button isn't squashed */
+            padding: 10px;
             box-sizing: border-box;
-            overflow-x: hidden; 
-            font-family: 'Poppins', 'Noto Sans JP', sans-serif;;
+            overflow: hidden; 
+            font-family: 'Poppins', 'Noto Sans JP', sans-serif;
             cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 511.999 511.999' width='16' height='16'><path fill='%23FF728B' d='M196.786 357.748C83.906 553.262-87.718 256 138.042 256c-225.761 0-54.136-297.262 58.744-101.747-112.881-195.515 230.368-195.515 117.487 0C427.154-41.262 598.779 256 373.018 256c225.761 0 54.136 297.262-58.744 101.748 112.88 195.514-230.368 195.514-117.488 0z'/><circle fill='%23FFEB99' cx='255.711' cy='255.997' r='59.308'/></svg>") 6 6, auto !important;
-        
         }
 
         #flower-canvas {
@@ -45,9 +46,20 @@
             z-index: -1;
         }
 
+        /* Layout Architecture Containers */
+        .main-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 650px;
+        }
+
         .window {
             width: 100%;
-            max-width: 500px;
+            max-width: 900px;
             background-color: var(--window-bg);
             border: 4px solid var(--border-dark);
             border-radius: 20px;
@@ -58,6 +70,7 @@
             z-index: 10;
         }
 
+        /* Top Title Bar Components */
         .title-bar {
             background-color: var(--white);
             border-bottom: 4px solid var(--border-dark);
@@ -78,29 +91,40 @@
             color: var(--text-dark);
         }
 
+        .window-controls {
+            color: var(--text-dark);
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* Document Body Content Panels */
         .content {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: 140px 1fr;
+            padding: 20px 20px 5px 20px;
+            display: flex;
+            flex-direction: column;
             gap: 15px;
         }
 
-        @media (max-width: 480px) {
-            .content { grid-template-columns: 1fr; text-align: left; }
-            .photo-frame { margin: 0 auto; width: 120px; }
-        }
-
-        .photo-frame {
+        /* Profile Visual Presentation Card */
+        .profile-header-card {
             background: var(--white);
             border: 4px solid var(--border-dark);
             border-radius: 15px;
-            padding: 10px;
+            padding: 8px;
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .photo-frame {
             position: relative;
+            height: fit-content;
         }
 
         .avatar {
             width: 100%;
-            aspect-ratio: 1/1;
+            aspect-ratio: 1 / 1;
             border-radius: 50%;
             border: 4px solid var(--border-dark);
             display: block;
@@ -109,40 +133,145 @@
 
         .status-dot {
             position: absolute;
-            bottom: 8px; right: 8px;
+            bottom: 4px; right: 4px;
             width: 24px; height: 24px;
             background-color: var(--offline);
             clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
             animation: heartBeat 2s infinite ease-in-out;
+            transition: background-color 0.4s ease;
         }
 
-        @keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        @keyframes heartBeat { 
+            0%, 100% { transform: scale(1); } 
+            50% { transform: scale(1.15); } 
+        }
 
-        .stats { display: flex; flex-direction: column; gap: 10px; }
-        .stat-item label { display: block; font-size: 14px; font-weight: bold; color: var(--text-dark); margin-bottom: 4px; }
-        .slider-bg { height: 18px; background: var(--white); border: 3px solid var(--border-dark); border-radius: 10px; overflow: hidden; }
-        .slider-fill { height: 100%; background: var(--border-dark); width: 0%; transition: width 1s ease-in-out; }
+        .info-container { 
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
 
-        .info-container { padding: 0 20px 20px; }
         .box {
             background: var(--accent-green);
             border: 3px solid var(--border-dark);
             border-radius: 30px;
-            padding: 8px;
-            font-size: clamp(18px, 5vw, 25px);
+            padding: 6px 8px;
+            font-size: clamp(16px, 4vw, 22px);
             text-align: center;
-            margin-bottom: 10px;
             font-weight: bold;
             color: var(--text-dark);
         }
 
-        /* --- UPDATED NAVIGATION STYLE (OUTSIDE) --- */
-        .bottom-nav {
-            position: relative; /* No longer fixed to the screen */
-            margin-top: 30px;    /* Space between window and button */
-            width: 100%;
+        /* Activity / Tracking Layouts */
+        .status-container {
+            background-color: var(--white);
+            padding: 8px;
+            border-radius: 15px;
+            border: 3px solid var(--border-dark);
+            display: block;
+        }
+
+        .activity-wrapper {
             display: flex;
+            align-items: center;
+            justify-content: center; /* Changed from flex-start to center */
+            gap: 15px;
+        }
+
+        .activity-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            text-align: center; /* Changed from left to center */
+        }
+
+        .activity-gif {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            image-rendering: pixelated; 
+            flex-shrink: 0;
+        }
+
+        .activity-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* Flexible Container for the SVG Icon and live text */
+        .time-box {
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
+            gap: 5px;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-sub);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Custom Scope for Clock SVG Colors */
+        .time-icon-svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--text-sub);
+            vertical-align: middle;
+        }
+        .cls-time-icon {
+            fill: var(--border-dark);
+        }
+
+        /* Stat Slider Presentation Structure */
+        .stats-container { 
+            padding: 5px 20px 20px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: var(--text-dark);
+            margin: 2px 0 0 0;
+            letter-spacing: 1px;
+            text-decoration: underline var(--text-dark);
+            text-decoration-thickness: 2px;
+        }
+
+        .stat-item label { 
+            display: block; 
+            font-size: 13px; 
+            font-weight: bold; 
+            color: var(--text-dark); 
+            margin-bottom: 4px; 
+        }
+
+        .slider-bg { 
+            height: 18px; 
+            background: var(--white); 
+            border: 3px solid var(--border-dark); 
+            border-radius: 10px; 
+            overflow: hidden; 
+        }
+
+        .slider-fill { 
+            height: 100%; 
+            background: #d0aed4;
+            width: 0%; 
+            transition: width 1s ease-in-out; 
+        }
+
+        /* Navigation Controls */
+        .side-nav {
+            display: flex;
             z-index: 100;
         }
 
@@ -150,16 +279,19 @@
             background: var(--white);
             border: 3px solid var(--border-dark);
             border-radius: 10px;
-            padding: 10px 30px;
+            padding: 14px 18px;
             text-decoration: none;
             color: var(--text-dark);
             font-weight: bold;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 6px;
+            font-size: 11px;
             transition: all 0.2s;
             box-shadow: 4px 4px 0 var(--border-dark);
-             cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 511.999 511.999' width='16' height='16'><path fill='%23FF728B' d='M196.786 357.748C83.906 553.262-87.718 256 138.042 256c-225.761 0-54.136-297.262 58.744-101.747-112.881-195.515 230.368-195.515 117.487 0C427.154-41.262 598.779 256 373.018 256c225.761 0 54.136 297.262-58.744 101.748 112.88 195.514-230.368 195.514-117.488 0z'/><circle fill='%23FFEB99' cx='255.711' cy='255.997' r='59.308'/></svg>") 6 6, auto !important;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 511.999 511.999' width='16' height='16'><path fill='%23FF728B' d='M196.786 357.748C83.906 553.262-87.718 256 138.042 256c-225.761 0-54.136-297.262 58.744-101.747-112.881-195.515 230.368-195.515 117.487 0C427.154-41.262 598.779 256 373.018 256c225.761 0 54.136 297.262-58.744 101.748 112.88 195.514-230.368 195.514-117.488 0z'/><circle fill='%23FFEB99' cx='255.711' cy='255.997' r='59.308'/></svg>") 6 6, auto !important;
         }
 
         .home-btn:hover {
@@ -171,63 +303,121 @@
             transform: translate(2px, 2px);
             box-shadow: 1px 1px 0 var(--border-dark);
         }
+
+        /* Screen Presentation Adaptations */
+        @media (max-width: 620px) {
+            body {
+                overflow-y: auto;
+            }
+            .main-container {
+                flex-direction: column-reverse; 
+                gap: 25px;
+            }
+            .home-btn {
+                flex-direction: row;
+                padding: 10px 30px;
+                font-size: 14px;
+                gap: 10px;
+            }
+            .activity-wrapper {
+                flex-direction: column;
+                text-align: center;
+                gap: 8px;
+            }
+            .activity-title {
+                text-align: center;
+            }
+            .photo-frame { 
+                margin: 0 auto; 
+                width: 110px; 
+            }
+        }
     </style>
 </head>
 <body>
     <audio id="click-sound" src="clicksound2.wav" preload="auto"></audio>
-
     <canvas id="flower-canvas"></canvas>
 
-    <div class="window">
-        <div class="title-bar">
-            <div class="tab">discord.com x</div>
-            <div class="window-controls">− ❐ ×</div>
-        </div>
+    <div class="main-container">
+        <nav class="side-nav">
+            <a href="profile.html" class="home-btn">
+                <span class="nav-icon">
+                    <svg height="24px" width="24px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511.999 511.999" fill="#000000">
+                        <path style="fill:#f0e0f2;" d="M14.447,212.002L228.013,90.347c8.469-5.087,19.25,1.013,19.25,10.893v50.951 c3.351,0.495,6.7,0.994,10.05,1.495c27.885,3.951,55.861,11.105,82.289,20.793c46.747,17.136,90.315,45.172,120.487,85.299 c31.396,41.756,46.374,95.194,43.213,147.203c-0.003,0.053-0.007,0.106-0.01,0.161c-0.598,9.44-8.635,16.679-18.087,16.336 c-0.199-0.007-0.397-0.014-0.594-0.022c-7.769-0.281-14.458-5.641-16.337-13.185c-0.034-0.138-0.066-0.265-0.096-0.378 c-5.323-20.423-14.037-40.077-25.977-57.497c-20.322-29.65-50.299-50.248-85.125-58.98c-35.159-8.816-71.152-6.507-106.507-0.387 c-2.156,0.373-3.307,0.572-3.307,0.572v50.951c0,9.88-10.781,15.98-19.25,10.892L14.447,233.787 C6.229,228.851,6.229,216.938,14.447,212.002z"></path> 
+                        <path d="M234.553,365.589c-3.688,0-7.371-0.995-10.713-2.981L10.348,240.995c-0.056-0.031-0.112-0.064-0.166-0.097 C3.806,237.068,0,230.342,0,222.904c0-7.438,3.806-14.165,10.183-17.995c0.055-0.033,0.11-0.066,0.166-0.097L223.843,83.196 c6.553-3.892,14.416-3.977,21.056-0.219c6.671,3.775,10.654,10.606,10.654,18.271v43.804c0.995,0.149,1.993,0.297,2.988,0.445 c22.672,3.212,45.637,8.53,68.191,15.798c4.356,1.404,6.749,6.072,5.346,10.427c-1.404,4.356-6.073,6.746-10.427,5.346 c-21.659-6.979-43.696-12.084-65.496-15.172c-3.409-0.509-6.756-1.006-10.102-1.502c-4.063-0.602-7.072-4.089-7.072-8.196v-50.949 c0-2.327-1.569-3.467-2.244-3.848c-0.674-0.382-2.457-1.141-4.454,0.059c-0.054,0.032-0.109,0.065-0.165,0.096L18.654,219.152 c-1.877,1.166-2.082,3.008-2.082,3.752s0.205,2.586,2.082,3.752l213.463,121.596c0.056,0.031,0.112,0.064,0.166,0.097 c1.994,1.196,3.779,0.439,4.453,0.059c0.675-0.382,2.244-1.521,2.244-3.848v-50.951c0-4.032,2.903-7.479,6.877-8.165l3.301-0.571 c43.54-7.539,78.472-7.375,109.936,0.514c15.792,3.96,30.71,10.253,44.34,18.709c3.89,2.412,5.086,7.52,2.674,11.408 c-2.412,3.889-7.523,5.085-11.408,2.674c-12.173-7.55-25.508-13.174-39.636-16.717c-28.293-7.094-59.996-7.378-99.511-0.861v43.961 c0,7.665-3.983,14.496-10.655,18.271C241.644,364.669,238.096,365.589,234.553,365.589z"></path> 
+                        <path d="M485.88,431.782c-0.323,0-0.645-0.006-0.971-0.018l-0.567-0.021c-11.453-0.415-21.354-8.418-24.104-19.464l-0.081-0.317 c-5.221-20.028-13.562-38.501-24.789-54.877c-4.765-6.952-10.177-13.483-16.089-19.408c-3.233-3.24-3.226-8.487,0.014-11.717 c3.24-3.234,8.487-3.226,11.717,0.014c6.626,6.643,12.692,13.959,18.026,21.745c12.311,17.96,21.449,38.177,27.162,60.091 l0.116,0.458c0.978,3.926,4.512,6.767,8.597,6.915l0.61,0.023c0.11,0.003,0.219,0.006,0.328,0.006c4.783,0,8.871-3.786,9.175-8.585 l0.009-0.144c3.089-50.823-12.062-102.479-41.565-141.718c-23.598-31.382-57.986-57.517-99.446-75.579 c-4.196-1.827-6.115-6.71-4.288-10.905s6.711-6.115,10.905-4.288c44.079,19.203,80.759,47.148,106.073,80.812 c31.833,42.338,48.184,97.989,44.861,152.686l-0.009,0.145C510.699,421.367,499.504,431.782,485.88,431.782z"></path> 
+                    </svg>
+                </span>
+            </a>
+        </nav>
 
-        <div class="content">
-            <div class="photo-frame">
-                <img id="avatar" src="https://via.placeholder.com/100" class="avatar">
-                <div id="status" class="status-dot"></div>
+        <div class="window">
+            <div class="title-bar">
+                <div class="tab">discord.com x</div>
+                <div class="window-controls">− ❐ ×</div>
             </div>
 
-            <div class="stats">
-                <div class="stat-item">
-                    <label>social 50%</label>
-                    <div class="slider-bg"><div class="slider-fill" style="width: 50%;"></div></div>
+            <div class="content">
+                <div class="profile-header-card">
+                    <div class="photo-frame">
+                        <img id="avatar" src="https://via.placeholder.com/100" class="avatar" alt="Avatar">
+                        <div id="status" class="status-dot"></div>
+                    </div>
+
+                    <div class="info-container">
+                        <div id="display-name" class="box">Loading...</div>
+                        <div id="username" class="box" style="background: var(--white); font-size: 14px;">@user</div>
+                    </div>
                 </div>
+
+                <h3 class="section-title">Activity</h3>
+                <div id="status-container" class="status-container">
+                    <div class="activity-wrapper">
+                        <img src="image/cup.gif" class="activity-gif" alt="Coffee Cup">
+                        <div class="activity-details">
+                            <div id="activity-title" class="activity-title">Loading Status...</div>
+                            
+                            <div id="time-box" class="time-box" style="display: none;">
+                                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" class="time-icon-svg">
+                                    <g id="SVGRepo_iconCarrier"> 
+                                        <g id="Time"> 
+                                            <path class="cls-time-icon" d="M20.73,6.45a10.46,10.46,0,0,0-3.42-1A11.38,11.38,0,0,0,16,5.33a10.66,10.66,0,0,0-7.71,18,10.54,10.54,0,0,0,5.76,3.13,12.6,12.6,0,0,1-2.05.18c-.31,0-.61,0-.91,0s-.54,0-.81-.08A12,12,0,0,1,17.72,4.12a11.55,11.55,0,0,1,1.85,1.25A8.53,8.53,0,0,1,20.73,6.45Z"></path> 
+                                            <path class="cls-time-icon" d="M19.89,19.71a.7.7,0,0,1-.56.29.72.72,0,0,1-.37-.11L16.15,18a3.34,3.34,0,0,1-1.48-2.77V8.67a.67.67,0,1,1,1.33,0v6.57a2,2,0,0,0,.89,1.67l2.82,1.86A.7.7,0,0,1,19.89,19.71Z"></path> 
+                                            <path class="cls-time-icon" d="M19.89,19.71a.7.7,0,0,1-.56.29.72.72,0,0,1-.37-.11L16.15,18a3.34,3.34,0,0,1-1.48-2.77V8.67a.67.67,0,1,1,1.33,0v6.57a2,2,0,0,0,.89,1.67l2.82,1.86A.7.7,0,0,1,19.89,19.71Z"></path> 
+                                            <path class="cls-time-icon" d="M28,16A12,12,0,0,1,16,28a11.8,11.8,0,0,1-4-.69,10.77,10.77,0,0,1-.91-.68,11.87,11.87,0,0,1-2.8-3.27,10.54,10.54,0,0,0,5.76,3.13h0a12,12,0,0,0,6.68-20h0a10.46,10.46,0,0,0-3.42-1,12.26,12.26,0,0,1,1.36-.08c.3,0,.61,0,.9,0A11.28,11.28,0,0,1,22.65,6,12,12,0,0,1,28,16Z"></path> 
+                                            <path d="M22.65,6a11.83,11.83,0,0,0-4.93-1.91,12,12,0,0,0-7.44,22.43,11.51,11.51,0,0,0,1.72.76A11.8,11.8,0,0,0,16,28,12,12,0,0,0,22.65,6ZM16,26.67a11,11,0,0,1-1.93-.18h0a10.54,10.54,0,0,1-5.76-3.13A10.66,10.66,0,0,1,16,5.33a11.38,11.38,0,0,1,1.31.08,10.46,10.46,0,0,1,3.42,1h0A10.67,10.67,0,0,1,16,26.67Z"></path> 
+                                            <path d="M19.89,19.71a.7.7,0,0,1-.56.29.72.72,0,0,1-.37-.11L16.15,18a3.34,3.34,0,0,1-1.48-2.77V8.67a.67.67,0,1,1,1.33,0v6.57a2,2,0,0,0,.89,1.67l2.82,1.86A.7.7,0,0,1,19.89,19.71Z"></path> 
+                                        </g> 
+                                    </g>
+                                </svg>
+                                <span id="activity-time" class="activity-time">00:00 elapsed</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-container">
+                <h3 class="section-title">energy check</h3>
                 <div class="stat-item">
-                    <label>sleepy 90%</label>
+                    <label>sleepy energy - 90%</label>
                     <div class="slider-bg"><div class="slider-fill" style="width: 90%;"></div></div>
                 </div>
                 <div class="stat-item">
-                    <label>energy 5%</label>
-                    <div class="slider-bg"><div class="slider-fill" style="width: 5%;"></div></div>
+                    <label>dreamy energy - 70%</label>
+                    <div class="slider-bg"><div class="slider-fill" style="width: 70%;"></div></div>
+                </div>
+                <div class="stat-item">
+                    <label>social energy - 20%</label>
+                    <div class="slider-bg"><div class="slider-fill" style="width: 20%;"></div></div>
                 </div>
             </div>
         </div>
-
-        <div class="info-container">
-            <div id="display-name" class="box">Loading...</div>
-            <div id="username" class="box" style="background: var(--white); font-size: 15px;">@user</div>
-        </div>
     </div>
 
-    <nav class="bottom-nav">
-        <a href="profile.html" class="home-btn">
-            <span class="nav-icon">
-                <svg width="24" height="24" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
-                    <g fill="none" stroke="#000" stroke-width="0.8">
-                        <path fill="#FFA7C0" d="M52 20.65c0-4.7-3.8-8.5-8.5-8.5-3.2 0-6 1.8-7.5 4.5-1.5-2.7-4.3-4.5-7.5-4.5-4.7 0-8.5 3.8-8.5 8.5 0 2 0.7 3.9 1.9 5.3L36 43.5l14.1-17.5c1.2-1.4 1.9-3.3 1.9-5.3z"/>
-                        <circle cx="36" cy="55" r="5" fill="#FFA7C0"/>
-                    </g>
-                </svg>
-            </span> 
-            HOME
-        </a>
-    </nav>
-
     <script>
-        const USER_ID = '748262928955998360'; 
+        const DISCORD_ID = '748262928955998360'; 
         const canvas = document.getElementById('flower-canvas');
         const ctx = canvas.getContext('2d');
         let petals = [];
@@ -260,8 +450,9 @@
                 ctx.fillStyle = this.color;
                 ctx.globalAlpha = 0.7; 
                 ctx.beginPath();
-                if (this.style === 0) { ctx.ellipse(0, 0, this.size, this.size / 1.8, 0, 0, Math.PI * 2); }
-                else if (this.style === 1) {
+                if (this.style === 0) { 
+                    ctx.ellipse(0, 0, this.size, this.size / 1.8, 0, 0, Math.PI * 2); 
+                } else if (this.style === 1) {
                     ctx.moveTo(0, 0);
                     ctx.bezierCurveTo(-this.size, -this.size, -this.size, this.size, 0, this.size);
                     ctx.bezierCurveTo(this.size, this.size, this.size, -this.size, 0, 0);
@@ -290,27 +481,123 @@
         }
         animatePetals();
 
-        async function fetchLanyard() {
-            try {
-                const response = await fetch(`https://api.lanyard.rest/v1/users/${USER_ID}`);
-                const { data } = await response.json();
-                
+        let activityTimestamp = null;
+        let timeTickerInterval = null;
+
+        function formatDuration(ms) {
+            if (ms < 0) ms = 0;
+            const totalSeconds = Math.floor(ms / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            
+            const hours = Math.floor(minutes / 60);
+            if (hours > 0) {
+                const remainingMinutes = minutes % 60;
+                return `${hours}:${remainingMinutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function startTimer(startTimeMs) {
+            clearInterval(timeTickerInterval);
+            activityTimestamp = startTimeMs;
+            const timeBox = document.getElementById("time-box");
+            const timeElement = document.getElementById("activity-time");
+            
+            if (!activityTimestamp) {
+                timeBox.style.display = "none";
+                return;
+            }
+
+            timeBox.style.display = "inline-flex";
+            
+            const updateTimerText = () => {
+                const now = Date.now();
+                const elapsed = now - activityTimestamp;
+                timeElement.innerText = `${formatDuration(elapsed)} elapsed`;
+            };
+
+            updateTimerText();
+            timeTickerInterval = setInterval(updateTimerText, 1000);
+        }
+
+        // Real-time Activity Stream Architecture (WebSocket Implementation)
+        const socket = new WebSocket("wss://api.lanyard.rest/socket");
+        const OPCODES = { INFO: 0, HELLO: 1, INITIALIZE: 2, HEARTBEAT: 3 };
+        let heartbeatInterval;
+
+        socket.addEventListener("message", (event) => {
+            const rawData = JSON.parse(event.data);
+            const { op, d } = rawData;
+
+            if (op === OPCODES.HELLO) {
+                heartbeatInterval = setInterval(() => {
+                    socket.send(JSON.stringify({ op: OPCODES.HEARTBEAT }));
+                }, d.heartbeat_interval);
+
+                socket.send(JSON.stringify({
+                    op: OPCODES.INITIALIZE,
+                    d: { subscribe_to_id: DISCORD_ID }
+                }));
+            }
+
+            if (op === OPCODES.INFO) {
+                updateAllPresenceData(d);
+            }
+        });
+
+        function updateAllPresenceData(data) {
+            // 1. Update Core Profile Details
+            if(data.discord_user) {
                 document.getElementById('display-name').textContent = data.discord_user.display_name;
-                document.getElementById('username').textContent = `@${data.discord_user.username}`;
+                document.getElementById('username').textContent = `@ ${data.discord_user.username}`;
                 
-                // FIXED: Logic to detect animated avatars (hashes starting with a_)
                 const avatarHash = data.discord_user.avatar;
                 const extension = avatarHash.startsWith('a_') ? 'gif' : 'webp';
-                document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${USER_ID}/${avatarHash}.${extension}?size=160`;
+                document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${avatarHash}.${extension}?size=160`;
+            }
 
-                const statusDot = document.getElementById('status');
-                const colors = { online: 'var(--online)', idle: 'var(--idle)', dnd: 'var(--dnd)', offline: 'var(--offline)' };
-                statusDot.style.backgroundColor = colors[data.discord_status] || colors.offline;
-            } catch (e) { console.error(e); }
+            // 2. Update Status Dot Colour Indicator
+            const statusDot = document.getElementById('status');
+            const colors = { online: 'var(--online)', idle: 'var(--idle)', dnd: 'var(--dnd)', offline: 'var(--offline)' };
+            statusDot.style.backgroundColor = colors[data.discord_status] || colors.offline;
+
+            // 3. Update Activity Panel Contexts & Track Start Timestamps
+            const actTitle = document.getElementById("activity-title");
+
+            if (data.listening_to_spotify && data.spotify) {
+                actTitle.innerText = "Listening to Spotify.";
+                actTitle.style.color = "var(--text-dark)";
+                startTimer(data.spotify.start);
+            } else if (data.activities && data.activities.length > 0) {
+                // Look specifically for games (type 0)
+                const gameActivity = data.activities.find(act => act.type === 0);
+
+                if (gameActivity) {
+                    actTitle.innerText = `Playing ${gameActivity.name}.`;
+                    actTitle.style.color = "var(--text-dark)";
+                    startTimer(gameActivity.timestamps ? gameActivity.timestamps.start : null);
+                } else {
+                    // Ignores Custom Status (type 4) text and defaults to "just Chilling."
+                    actTitle.innerText = "just Chilling.";
+                    actTitle.style.color = "var(--text-sub)";
+                    clearInterval(timeTickerInterval);
+                    document.getElementById("time-box").style.display = "none";
+                }
+            } else {
+                actTitle.innerText = "just Chilling.";
+                actTitle.style.color = "var(--text-sub)";
+                clearInterval(timeTickerInterval);
+                document.getElementById("time-box").style.display = "none";
+            }
         }
-        fetchLanyard();
-        setInterval(fetchLanyard, 10000);
 
+        socket.addEventListener("close", () => {
+            clearInterval(heartbeatInterval);
+            clearInterval(timeTickerInterval);
+        });
+
+        // Mouse Move Particles
         if (window.matchMedia("(pointer: fine)").matches) {
             document.addEventListener('mousemove', function(e) {
                 const heart = document.createElement('div');
@@ -330,41 +617,35 @@
             });
         }
 
-const clickSound = document.getElementById('click-sound');
+        // Global Audio Framework
+        const clickSound = document.getElementById('click-sound');
+        const allLinks = document.querySelectorAll('a');
 
-// Select ALL links on the page
-const allLinks = document.querySelectorAll('a');
+        allLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.href && !this.href.includes('#')) {
+                    e.preventDefault();
+                    const targetUrl = this.href;
 
-allLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-        // 1. Check if the link is actually going somewhere (has an href)
-        if (this.href && !this.href.includes('#')) {
-            e.preventDefault(); // Stop navigation
-            const targetUrl = this.href;
+                    clickSound.currentTime = 0;
+                    clickSound.play().catch(o => {});
 
-            clickSound.currentTime = 0;
-            clickSound.play();
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 150); 
+                } else {
+                    clickSound.currentTime = 0;
+                    clickSound.play().catch(o => {});
+                }
+            });
+        });
 
-            // 2. Wait for the sound to start, then navigate
-            setTimeout(() => {
-                window.location.href = targetUrl;
-            }, 150); 
-        } else {
-            // If it's just a button/anchor without a URL, just play sound
-            clickSound.currentTime = 0;
-            clickSound.play();
-        }
-    });
-});
-
-// Also play sound for non-link clicks (general background)
-window.addEventListener('click', (e) => {
-    // Only play if we didn't click a link (to avoid double sound)
-    if (!e.target.closest('a')) {
-        clickSound.currentTime = 0;
-        clickSound.play();
-    }
-});
+        window.addEventListener('click', (e) => {
+            if (!e.target.closest('a')) {
+                clickSound.currentTime = 0;
+                clickSound.play().catch(o => {});
+            }
+        });
     </script>
 </body>
 </html>
