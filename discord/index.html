@@ -572,32 +572,39 @@
 
             // 3. Update Activity Panel Contexts & Track Start Timestamps
             const actTitle = document.getElementById("activity-title");
+            const timeBox = document.getElementById("time-box");
 
-            if (data.listening_to_spotify && data.spotify) {
+            // 1. Check for Game Activity first (type 0)
+            const gameActivity = data.activities && data.activities.find(act => act.type === 0);
+
+            if (gameActivity) {
+                // Priority 1: User is playing a game
+                actTitle.innerText = `Playing ${gameActivity.name}.`;
+                actTitle.style.color = "var(--text-dark)";
+                
+                // Show time box and start timer ONLY for the game
+                if (timeBox) timeBox.style.display = "block"; 
+                startTimer(gameActivity.timestamps ? gameActivity.timestamps.start : null);
+
+            } else if (data.listening_to_spotify && data.spotify) {
+                // Priority 2: Not gaming, but listening to Spotify
                 actTitle.innerText = "Listening to Spotify.";
                 actTitle.style.color = "var(--text-dark)";
-                startTimer(data.spotify.start);
-            } else if (data.activities && data.activities.length > 0) {
-                // Look specifically for games (type 0)
-                const gameActivity = data.activities.find(act => act.type === 0);
+                
+                // Hide the elapsed timer box for Spotify as requested
+                clearInterval(timeTickerInterval);
+                if (timeBox) timeBox.style.display = "none";
 
-                if (gameActivity) {
-                    actTitle.innerText = `Playing ${gameActivity.name}.`;
-                    actTitle.style.color = "var(--text-dark)";
-                    startTimer(gameActivity.timestamps ? gameActivity.timestamps.start : null);
-                } else {
-                    // Ignores Custom Status (type 4) text and defaults to "just Chilling."
-                    actTitle.innerText = "just Chilling.";
-                    actTitle.style.color = "var(--text-sub)";
-                    clearInterval(timeTickerInterval);
-                    document.getElementById("time-box").style.display = "none";
-                }
             } else {
+                // Priority 3: Doing absolutely nothing (Just Chilling)
                 actTitle.innerText = "just Chilling.";
                 actTitle.style.color = "var(--text-sub)";
+                
+                // Clear timer and hide the time box
                 clearInterval(timeTickerInterval);
-                document.getElementById("time-box").style.display = "none";
+                if (timeBox) timeBox.style.display = "none";
             }
+            
         }
 
         socket.addEventListener("close", () => {
