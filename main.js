@@ -198,28 +198,31 @@ window.addEventListener('click', (e) => {
     }
 });
 (function() {
+        
         const currentPath = window.location.pathname;
-        if (currentPath.endsWith('.html')) {  
+        if (currentPath.endsWith('.html')) {
             const cleanPath = currentPath.replace(/\.html$/, '');
             window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
         }
+
+        
         document.querySelectorAll('a').forEach(link => {
-            const href = link.getAttribute('href');
-            if (href && href.endsWith('.html')) {
-                link.setAttribute('href', href.replace(/\.html$/, ''));
-                
-                link.addEventListener('click', function(e) {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href.endsWith('.html')) {
                     e.preventDefault();
-                    const targetPage = href; 
-                    window.history.pushState(null, '', href.replace(/\.html$/, ''));
-                    fetch(targetPage)
-                        .then(response => response.text())
+                    const cleanLink = href.replace(/\.html$/, '');
+                    window.history.pushState(null, '', cleanLink);
+                    
+                    
+                    fetch(href)
+                        .then(res => res.text())
                         .then(html => {
-                            document.open();
-                            document.write(html);
-                            document.close();
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            document.body.innerHTML = doc.body.innerHTML;
                         });
-                });
-            }
+                }
+            });
         });
     })();
