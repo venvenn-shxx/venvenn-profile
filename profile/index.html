@@ -6,8 +6,13 @@
     <title>Venvenn's Profile </title>
     <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
-    <!-- Add the favicon link here -->
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <script>
+        if (window.location.pathname.endsWith('.html')) {
+        const cleanPath = window.location.pathname.replace('.html', '');
+        window.history.replaceState(null, '', cleanPath);
+    }
+    </script>
 </head>
 <body>
     <audio id="click-sound" src="../clicksound2.wav" preload="auto"></audio>
