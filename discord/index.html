@@ -11,7 +11,7 @@
         window.history.replaceState(null, '', cleanPath);
     }
     </script>
-    <title>Ven's Discord Profile</title>
+    <title>Ven-Discord</title>
     <style>
         /* Aesthetic Palette */
         :root {
@@ -559,7 +559,7 @@
             // 1. Update Core Profile Details
             if(data.discord_user) {
                 document.getElementById('display-name').textContent = data.discord_user.display_name;
-                document.getElementById('username').textContent = `@ ${data.discord_user.username}`;
+                document.getElementById('username').textContent = `@${data.discord_user.username}`;
                 
                 const avatarHash = data.discord_user.avatar;
                 const extension = avatarHash.startsWith('a_') ? 'gif' : 'webp';
